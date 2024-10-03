@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cdn for font family -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- cdn to take snap of html element -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- confetti animation lottie -->
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+
+    <link rel="shortcut icon" href="./assets/icons/favIcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/util.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>chess league</title>
+</head>
+
+<body>
+    <div class="popup">
+        <div class="message"></div>
+        <div class="icon"></div>
+    </div>
+
+    <div class="container">
+        <div class="board-layout">
+            <!-- ---------- BLACK PLAYER ---------- -->
+            <div class="player black">
+                <div class="user">
+
+                    <div class="left">
+                        <div class="profile-photo">
+                            <img src="./assets/avatar/devki.png" alt="">
+                        </div>
+                    </div>
+                    <div class="right">
+                        <p class="name">devki <sup id="searchDepth"></sup></p>
+
+                        <div class="captures">
+                            <div class="capture wp-0"></div>
+                            <div class="capture wb-0"></div>
+                            <div class="capture wn-0"></div>
+                            <div class="capture wr-0"></div>
+                            <div class="capture wq-0"></div>
+                            <div class="capture-score"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control">
+                    <div class="drop-menu">
+                        <div class="selection">2s</div>
+                        <div class="options" id="black">
+                            <div class="option">1</div>
+                            <div class="option select">2</div>
+                            <div class="option">3</div>
+                            <div class="option">4</div>
+                            <div class="option">5</div>
+                            <div class="option">6</div>
+                            <div class="option">7</div>
+                            <div class="option">8</div>
+                            <div class="option">9</div>
+                            <div class="option">10</div>
+                        </div>
+                    </div>
+                    <img class="icon" src="./assets/icons/computer.svg" alt="">
+                    <div class="toggle-btn" id="blackBot"></div>
+                </div>
+            </div>
+
+
+
+            <!-- =========== GAME BOARD =========== -->
+            <div id="board">
+                <!-- ---------- cordinates ---------- -->
+                <svg viewBox="0 0 100 100" class="coordinates">
+                    <text x="0.75" y="3.5" font-size="2.8" class="coordinate-light">8</text>
+                    <text x="0.75" y="15.75" font-size="2.8" class="coordinate-dark">7</text>
+                    <text x="0.75" y="28.25" font-size="2.8" class="coordinate-light">6</text>
+                    <text x="0.75" y="40.75" font-size="2.8" class="coordinate-dark">5</text>
+                    <text x="0.75" y="53.25" font-size="2.8" class="coordinate-light">4</text>
+                    <text x="0.75" y="65.75" font-size="2.8" class="coordinate-dark">3</text>
+                    <text x="0.75" y="78.25" font-size="2.8" class="coordinate-light">2</text>
+                    <text x="0.75" y="90.75" font-size="2.8" class="coordinate-dark">1</text>
+                    <text x="10" y="99" font-size="2.8" class="coordinate-dark">a</text>
+                    <text x="22.5" y="99" font-size="2.8" class="coordinate-light">b</text>
+                    <text x="35" y="99" font-size="2.8" class="coordinate-dark">c</text>
+                    <text x="47.5" y="99" font-size="2.8" class="coordinate-light">d</text>
+                    <text x="60" y="99" font-size="2.8" class="coordinate-dark">e</text>
+                    <text x="72.5" y="99" font-size="2.8" class="coordinate-light">f</text>
+                    <text x="85" y="99" font-size="2.8" class="coordinate-dark">g</text>
+                    <text x="97.5" y="99" font-size="2.8" class="coordinate-light">h</text>
+                </svg>
+                <!-- -------- promotion window -------- -->
+                <div class="promotion-window white">
+                    <div class="piece wq"></div>
+                    <div class="piece wr"></div>
+                    <div class="piece wb"></div>
+                    <div class="piece wn"></div>
+                </div>
+                <div class="promotion-window black">
+                    <div class="piece bq"></div>
+                    <div class="piece br"></div>
+                    <div class="piece bb"></div>
+                    <div class="piece bn"></div>
+                </div>
+            </div>
+
+
+
+            <!-- ---------- WHITE PLAYER ---------- -->
+            <div class="player white">
+                <div class="user">
+
+                    <div class="left">
+                        <div class="profile-photo">
+                            <img src="./assets/avatar/acharya.png" alt="">
+                        </div>
+                    </div>
+                    <div class="right">
+                        <p class="name">acharya <sup id="searchDepth"></sup></p>
+
+                        <div class="captures">
+                            <div class="capture bp-0"></div>
+                            <div class="capture bb-0"></div>
+                            <div class="capture bn-0"></div>
+                            <div class="capture br-0"></div>
+                            <div class="capture bq-0"></div>
+                            <div class="capture-score"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control">
+
+
+                    <div class="drop-menu">
+                        <div class="selection">2s</div>
+                        <div class="options" id="white">
+                            <div class="option">1</div>
+                            <div class="option select">2</div>
+                            <div class="option">3</div>
+                            <div class="option">4</div>
+                            <div class="option">5</div>
+                            <div class="option">6</div>
+                            <div class="option">7</div>
+                            <div class="option">8</div>
+                            <div class="option">9</div>
+                            <div class="option">10</div>
+                        </div>
+                    </div>
+                    <img class="icon" src="./assets/icons/computer.svg" alt="">
+                    <div class="toggle-btn" id="whiteBot"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ---------- CONTROLLERS ---------- -->
+        <div class="game-controller">
+
+            <div class="header">
+                <div>
+                    <span>hash key : </span>
+                    <span id="hash-key">5300d2e1</span>
+                </div>
+
+                <p id="mateIn" style="display: none;">mate in <span>5</span> moves</p>
+
+                <div class="icons">
+                    <div class="icon download" onclick="showDownloadWindow()"><img src="./assets/icons/download.png"
+                            alt=""></div>
+                    <div class="icon uploadBook" onclick="showUploadBookWindow()"><img src="./assets/icons/book.svg" alt=""></div>
+                </div>
+            </div>
+            <div class="lines">
+                <p class="line"></p>
+                <p class="line"></p>
+                <p class="line"></p>
+            </div>
+
+            <div class="movelist"></div>
+
+            <div class="controller">
+                <button title="Flip Board" class="btn secondary" onclick="flipBoard()">
+                    <i class="uil uil-repeat"></i>
+                </button>
+
+                <button title="Move Back" class="btn secondary move-back" onclick="gui.undoMove({slide:true})">
+                    <i class="uil uil-angle-left-b"></i>
+                </button>
+
+                <button title="Move Forward" class="btn secondary move-forward" onclick="moveForward()"><i
+                        class="uil uil-angle-right-b"></i>
+                </button>
+
+                <button title="New Game" class="btn secondary new-game" onclick="showConfirmWindow()"><i
+                        class="uil uil-plus"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ---------- END-GAME WINDOW ---------- -->
+
+    <dotlottie-player src="https://lottie.host/04c8f302-d1f3-40ef-b838-32097c555bce/VJmLvTkY5h.json"
+        class="win-animation">
+    </dotlottie-player>
+    <div class="game-over">
+
+        <div class="close"><i class="uil uil-times"></i></div>
+        <div class="header">
+            <div class="title">
+                Draw
+            </div>
+            <div class="subtitle">by stalemate</div>
+        </div>
+        <div class="players">
+            <div class="player white">
+                <div class="profile-photo">
+                    <img src="./assets/avatar/acharya.png" alt="">
+                    <div class="white crown-alt"></div>
+                </div>
+                <p class="name">acharya</p>
+            </div>
+            <p>vs</p>
+            <div class="player black">
+                <div class="profile-photo">
+                    <img src="./assets/avatar/devki.png" alt="">
+                    <div class="white crown-alt"></div>
+                </div>
+                <p class="name">devki</p>
+            </div>
+        </div>
+        <div class="crowns">
+            <img class="crown" src="./assets/icons/crown-shadow.svg" alt="">
+            <img class="crown" src="./assets/icons/crown-shadow.svg" alt="">
+            <img class="crown dark" src="./assets/icons/crown-shadow.svg" alt="">
+        </div>
+        <div class="buttons">
+            <button class="btn primary bold" onclick="newGame()">New Game</button>
+            <button class="btn secondary">Share</button>
+            <button class="btn secondary">Game Review</button>
+        </div>
+    </div>
+
+    <div class="backdrop">
+        <!-- ---------- DOWNLOAD WINDOW ---------- -->
+        <div class="download-window">
+            <div class="close" onclick="removeBackdrop()"><i class="uil uil-times"></i></div>
+            <div class="header">
+                <div class="option">
+                    <div class="option-pgn active">PGN</div>
+                    <div class="option-image">Image</div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="fen">
+                    <p>FEN</p>
+                    <input type="text" readonly
+                        value="rnb1k1nr/pppp1p1p/6p1/2b1p3/5PPq/8/PPPPPN1P/RNBQKB1R w KQkq - 4 5">
+                </div>
+                <div class="pgn">
+                    <p>PGN</p>
+                    <textarea id="pgn" readonly>1. d4 e5 2. d5 e4 3. Nf3 exf3 4. exf3 c5 5. dxc6 </textarea>
+                </div>
+                <button class="btn primary download">
+                    <div class="icon">
+                        <img src="./assets/icons/download.png" alt="">
+                    </div>
+                    Download
+                </button>
+            </div>
+        </div>
+
+        <!-- ---------- UPLOAD GAME WINDOW ---------- -->
+        <div class="confirm-popover">
+            <div class="close" onclick="removeBackdrop()"><i class="uil uil-times"></i></div>
+            <div class="message">add new game</div>
+
+            <!-- upload -->
+            <input id="upload-fen-input" type="text" placeholder="Fen">
+            <div class="upload">
+                <textarea id="upload-pgn-input" placeholder="Paste one or upload PGN file here."></textarea>
+                <input type="file" id="file-input" accept=".pgn" style="display: none;">
+                <div id="upload-bar"></div>
+                <div class="btn secondary" id="upload-pgn-btn">
+                    <div class="icon"><img src="./assets/icons/upload.png" alt=""></div>
+                    upload
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button class="btn secondary" id="setup-btn">set up</button>
+                <button class="btn primary" id="confirm">new game</button>
+            </div>
+        </div>
+
+        <div class="upload-book">
+            <div class="close" onclick="removeBackdrop()"><i class="uil uil-times"></i></div>
+            <h3>Books</h3>
+
+            <li class="book" style="display: none;">
+                <img src="./assets/icons/book.svg" alt="" class="icon">
+                <div class="content">
+                    <div class="detail">
+                        <div class="file-name">book.bin</div>
+                        <div class="percent">0%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </li>
+
+            <section class="library">
+                <div class="book selected">
+                    <img src="./assets/icons/book.svg" alt="" class="icon">
+                    <div class="detail">
+                        <div class="file-name">gm2600.bin</div>
+                        <div class="file-size">338.61 KB</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- upload -->
+            <div class="upload">
+                <input type="file" id="book-input" accept=".bin" style="display: none;">
+                <div class="btn secondary" id="upload-book-btn">
+                    <div class="icon"><img src="./assets/icons/upload.png" alt=""></div>
+                    Upload Book
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ---------- SETUP GAME  ---------- -->
+    <div class="setup-position">
+        <div class="close"><i class="uil uil-times"></i></div>
+
+        <div class="castle-permission">
+            <div class="white">white</div>
+            <div class="black">black</div>
+            <div class="checkbox-grid">
+                <label><input type="checkbox" checked id="4"> (o-o)</label>
+                <label><input type="checkbox" checked id="2"> (o-o)</label>
+                <label><input type="checkbox" checked id="8"> (o-o-o)</label>
+                <label><input type="checkbox" checked id="1"> (o-o-o)</label>
+            </div>
+        </div>
+        <div class="pieces">
+            <div class="piece wp"></div>
+            <div class="piece wr"></div>
+            <div class="piece wn"></div>
+            <div class="piece wb"></div>
+            <div class="piece wq"></div>
+            <div class="piece wk"></div>
+
+            <div class="piece bp"></div>
+            <div class="piece br"></div>
+            <div class="piece bn"></div>
+            <div class="piece bb"></div>
+            <div class="piece bq"></div>
+            <div class="piece bk"></div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn secondary" id="clear-board">clear board</button>
+            <button class="btn secondary" id="reset-board">reset board</button>
+        </div>
+    </div>
+</body>
+
+<script src="./js/defs.js"></script>
+<script src="./js/bitBoard.js"></script>
+<script src="./js/sounds.js"></script>
+<script src="./js/board.js"></script>
+<script src="./js/moveStructure.js"></script>
+<script src="./js/generateMove.js"></script>
+<script src="./js/perft.js"></script>
+
+<script src="./js/evaluation.js"></script>
+<script src="./js/pvTable.js"></script>
+<script src="./js/search.js"></script>
+
+<script src="./js/gui/board.js"></script>
+<script src="./js/gui/controlls.js"></script>
+<script src="./js/pgnCompiler.js"></script>
+<script src="./js/polyglot.js"></script>
+
+<script src="./js/main.js"></script>
+
+</html>
